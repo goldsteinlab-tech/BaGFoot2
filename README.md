@@ -22,7 +22,7 @@ BAGFOOT2 requires only ATAC-seq data, does not depend on prior knowledge of rele
 ## Documentation
 
 📘 **HTML vignette (recommended entry point)**  
-➡️ https://goldsteinlab-tech.github.io/BAGFOOT2/
+➡️ https://goldsteinlab-tech.github.io/BaGFoot2/
 
 The vignette provides:
 - a conceptual overview of the BAGFOOT2 workflow,
@@ -66,7 +66,7 @@ bagfoot2 --help
 install.packages("devtools")
 
 # install BAGFOOT2 from GitHub
-devtools::install_github("goldsteinlab-tech/BAGFOOT2", build_vignettes = TRUE)
+devtools::install_github("goldsteinlab-tech/BaGFoot2", build_vignettes = TRUE)
 ```
 
 ---
@@ -162,4 +162,4 @@ This work was supported by the **European Research Council** (ERC-StG #947907, t
 
 * Maintainer: [ido.goldstein@mail.huji.ac.il](mailto:ido.goldstein@mail.huji.ac.il)
 * Bug reports & feature requests:
-  [https://github.com/goldsteinlab-tech/BAGFOOT2/issues](https://github.com/goldsteinlab-tech/BAGFOOT2/issues)
+  [https://github.com/goldsteinlab-tech/BaGFoot2/issues](https://github.com/goldsteinlab-tech/BaGFoot2/issues)

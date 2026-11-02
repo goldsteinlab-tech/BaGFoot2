@@ -2,7 +2,7 @@
 # ==============================================================================
 # BAGFOOT2 - command-line wrapper
 # Differential transcription factor footprinting from ATAC-seq
-# https://github.com/goldsteinlab-tech/BAGFOOT2
+# https://github.com/goldsteinlab-tech/BaGFoot2
 # ==============================================================================
 
 .libPaths(R.home("library"))
@@ -79,9 +79,9 @@ opt <- parse_args(opt_parser, print_help_and_exit = FALSE)
 
 if (opt$help) {
   cat("BAGFOOT2: differential transcription factor footprinting from ATAC-seq\n\n")
-  cat("Version:   2.0.2\n")
+  cat("Version:   2.0.3\n")
   cat("About:     developed in the Goldstein Lab.\n")
-  cat("Code:      https://github.com/goldsteinlab-tech/BAGFOOT2\n\n")
+  cat("Code:      https://github.com/goldsteinlab-tech/BaGFoot2\n\n")
   print_help(opt_parser)
   quit(status = 0)
 }

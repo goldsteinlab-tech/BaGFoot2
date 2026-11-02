@@ -1,6 +1,6 @@
 Package: bagfoot2
 Title: Differential Transcription Factor Footprinting from ATAC-seq
-Version: 2.0.2
+Version: 2.0.3
 Authors@R: 
     person("Leslie", "Cohen", , "leslie.cohen@mail.huji.ac.il", role = c("aut", "cre"))
 Description: Predicts which transcription factors change their activity
@@ -9,8 +9,8 @@ Description: Predicts which transcription factors change their activity
     with a robust Mahalanobis (MCD) outlier test. Updated implementation of
     BaGFoot (Baek et al., Cell Reports 2017).
 License: GPL-3
-URL: https://github.com/goldsteinlab-tech/BAGFOOT2
-BugReports: https://github.com/goldsteinlab-tech/BAGFOOT2/issues
+URL: https://github.com/goldsteinlab-tech/BaGFoot2
+BugReports: https://github.com/goldsteinlab-tech/BaGFoot2/issues
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.3

@@ -11,8 +11,8 @@ Predicts which transcription factors change their activity between two condition
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://github.com/goldsteinlab-tech/BAGFOOT2}
-  \item Report bugs at \url{https://github.com/goldsteinlab-tech/BAGFOOT2/issues}
+  \item \url{https://github.com/goldsteinlab-tech/BaGFoot2}
+  \item Report bugs at \url{https://github.com/goldsteinlab-tech/BaGFoot2/issues}
 }
 
 }
