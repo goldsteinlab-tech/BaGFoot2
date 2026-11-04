@@ -376,16 +376,16 @@ for (c in couples) {
   system(merge_output_leslie)
 
   # read the merged table and add the header
-  dat_leslie <- read.table(paste0(bg_dir, set1, "_", set2, "_On_pooled_", set1, "_", set2,
+  dat <- read.table(paste0(bg_dir, set1, "_", set2, "_On_pooled_", set1, "_", set2,
                                   "_hotspot_footprint_depth_table_leslie_merged.csv"),
                            quote = "\"", comment.char = "")
-  colnames(dat_leslie) <- c("num", "filename", "center", "logo", "motiflength", "motif", "memeNo", "memeEntry",
+  colnames(dat) <- c("num", "filename", "center", "logo", "motiflength", "motif", "memeNo", "memeEntry",
                             "lrmotif", "lrflanking", "lrtotal", "fdepth1", "fdepth2", "meancc1", "meancc2", "numsite")
 
   # bagplot + D2 barplot + FDR barplot + CSV table with all values
   # NOTE: dataname1 = treatment, dataname2 = control (we plot treatment vs control)
   test_gen <- gen_bagplot_bagfoot2(
-    dat_leslie,
+    dat,
     dataname1               = set2,   # treatment -> "increase" panel
     dataname2               = set1,   # control   -> "decrease" panel
     qvaluethreshold_bagplot = 0.05,
