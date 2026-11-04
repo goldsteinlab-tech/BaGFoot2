@@ -755,6 +755,12 @@ gen_bagplot_bagfoot2 <- function(
       if (nrow(df) == 0) return(NULL)
 
       df$display_name <- factor(df$display_name, levels = df$display_name)
+
+   # pad to maha_top_n slots so bar thickness is constant
+     n_pad      <- maha_top_n - nrow(df)
+     pad_levels <- if (n_pad > 0) paste0(".pad", seq_len(n_pad)) else character(0)
+     all_levels <- c(pad_levels, levels(df$display_name))
+
       df$yval    <- df[[metric]]
       df$fillval <- df[[fill_var]]
 
@@ -769,7 +775,13 @@ gen_bagplot_bagfoot2 <- function(
         ggplot2::geom_col(width = 0.8) +
         ggplot2::coord_flip(clip = "off", ylim = c(0, y_lim)) +
         ggplot2::scale_fill_gradientn(colours = pal, name = fill_lab) +
-        ggplot2::scale_x_discrete(expand = ggplot2::expansion(add = c(0.5, 0.5)))
+        #ggplot2::scale_x_discrete(expand = ggplot2::expansion(add = c(0.5, 0.5)))
+
+	ggplot2::scale_x_discrete(
+  	limits = all_levels,
+  	labels = function(x) ifelse(startsWith(x, ".pad"), "", x),
+  	expand = ggplot2::expansion(add = c(0.5, 0.5))
+	)
 
       if (nrow(rows_hom) > 0) {
         p <- p + ggplot2::geom_label(
