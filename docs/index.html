@@ -332,8 +332,10 @@ replicas per condition (e.g., treated, control).</p>
 <code>samtools idxstats file.bam &gt; file.bam.csv</code>), named
 exactly like the BAM file followed by the .csv extension
 (e.g. <code>fed.sorted.bam.csv</code>).</p>
-<p>PCR duplicates must be removed from the BAM files beforehand
-(e.g. Picard MarkDuplicates).</p>
+<p>In our pipeline, reads are filtered on the merged BAM before peak
+calling: mitochondrial reads are removed and only properly paired reads
+with MAPQ ≥ 30 are kept
+(<code>samtools view -q 30 -F 1804 -f 2</code>).</p>
 </div>
 <div id="b.-macs2-peaks-directory" class="section level3">
 <h3>b. MACS2 Peaks Directory</h3>
@@ -993,8 +995,7 @@ gain or lose activity between the two conditions:</p>
 <li><p>the <strong>bagplot</strong> (<code>*_bfoot2.pdf</code> and
 <code>*_bfoot2_zoomIn.pdf</code>),</p></li>
 <li><p>the <strong>barplots</strong> of the significant TFs, ranked by
-D2 (<code>*_maha_D2.pdf</code> / <code>.tiff</code>) and by FDR
-(<code>*_maha_padj.pdf</code> / <code>.tiff</code>),</p></li>
+D2 (<code>*_maha_D2.pdf</code> / <code>.tiff</code>),</p></li>
 <li><p>the <strong>CSV</strong> result table with all values for each
 motif (<code>*_bagfoot2_output.csv</code>).</p></li>
 </ul>

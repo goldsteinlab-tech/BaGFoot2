@@ -109,7 +109,7 @@ Its index file (.bai)
 
 A SAMtools stats file (output from `samtools idxstats file.bam > file.bam.csv`), named exactly like the BAM file followed by the .csv extension (e.g. `fed.sorted.bam.csv`).
 
-PCR duplicates must be removed from the BAM files beforehand (e.g. Picard MarkDuplicates).
+In our pipeline, reads are filtered on the merged BAM before peak calling: mitochondrial reads are removed and only properly paired reads with MAPQ ≥ 30 are kept (`samtools view -q 30 -F 1804 -f 2`).
 
 ### b. MACS2 Peaks Directory
 Contains the MACS2 output files for each condition.
@@ -675,7 +675,7 @@ The following files are generated, providing an overview of TFs that gain or los
 
 - the **bagplot** (`*_bfoot2.pdf` and `*_bfoot2_zoomIn.pdf`),
 
-- the **barplots** of the significant TFs, ranked by D2 (`*_maha_D2.pdf` / `.tiff`) and by FDR (`*_maha_padj.pdf` / `.tiff`),
+- the **barplots** of the significant TFs, ranked by D2 (`*_maha_D2.pdf` / `.tiff`),
 
 - the **CSV** result table with all values for each motif (`*_bagfoot2_output.csv`).
 

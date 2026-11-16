@@ -127,7 +127,7 @@ Details on file organization and naming conventions are provided in the vignette
 BAGFOOT2 produces:
 
 * A bagplot of all motifs (Δ flanking accessibility vs. Δ footprint depth) highlighting TFs with differential activity
-* Barplots of the top significant TFs ranked by Mahalanobis distance (D2) and by FDR
+* Barplots of the top significant TFs ranked by Mahalanobis distance (D2)
 * A table with all values per motif: ΔFA, ΔFPD, D2, p-value, FDR, direction, HOMER enrichment
 * Optional annotation with HOMER motif enrichment results
 

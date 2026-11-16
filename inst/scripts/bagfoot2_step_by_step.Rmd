@@ -300,7 +300,7 @@ if (use_homer) {
 ## Footprinting, statistics and plots
 
 Bias-corrected footprinting is computed for all archetype motifs (batches of 25 motifs).
-Then the robust Mahalanobis distance (MCD) is computed for each motif, and the bagplot, the D2 / FDR barplots and the result table are generated.
+Then the robust Mahalanobis distance (MCD) is computed for each motif, and the bagplot, the D2 barplot and the result table are generated.
 
 ```{r}
 setwd(bg_dir)
@@ -382,7 +382,7 @@ for (c in couples) {
   colnames(dat) <- c("num", "filename", "center", "logo", "motiflength", "motif", "memeNo", "memeEntry",
                             "lrmotif", "lrflanking", "lrtotal", "fdepth1", "fdepth2", "meancc1", "meancc2", "numsite")
 
-  # bagplot + D2 barplot + FDR barplot + CSV table with all values
+  # bagplot + D2 barplot + CSV table with all values
   # NOTE: dataname1 = treatment, dataname2 = control (we plot treatment vs control)
   test_gen <- gen_bagplot_bagfoot2(
     dat,

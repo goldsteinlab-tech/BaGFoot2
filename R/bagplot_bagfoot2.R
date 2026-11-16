@@ -12,9 +12,9 @@
 #' distance. Output columns (D2, pvalue, qvalue) keep the same names, so
 #' downstream scripts are unaffected.
 #'
-#' In addition to the bagplot, two barplot figures ranking motifs by the
-#' Mahalanobis statistic are produced (see \code{maha_mode}), following the same
-#' visual grammar as \code{gen_evt_barplot_bagfoot2()}: two panels (increase /
+#' In addition to the bagplot, a barplot figure ranking the significant motifs
+#' by the robust Mahalanobis distance (bar length = D2, fill = FDR) is produced,
+#' following the same visual grammar as \code{gen_evt_barplot_bagfoot2()}: two panels (increase /
 #' decrease), bars pointing right, red-to-grey gradient fill, and hollow "ME"
 #' labels for HOMER-enriched motifs.
 #'
@@ -34,10 +34,6 @@
 #'   true positives. See robust_mahalanobis_test() in method.R.
 #' @param maha_barplot Whether to generate the Mahalanobis barplot figures (default: TRUE).
 #' @param maha_top_n Max bars per panel in the Mahalanobis barplots (default: 20).
-#' @param maha_mode Which barplot layout(s) to produce:
-#'   \code{"padj"} = bar length is -log10(FDR), fill is D2;
-#'   \code{"D2"}   = bar length is D2, fill is FDR;
-#'   \code{"both"} = both figures (default).
 #' @return A ggplot object with the bagplot.
 #' @export
 gen_bagplot_bagfoot2 <- function(
@@ -60,8 +56,7 @@ gen_bagplot_bagfoot2 <- function(
   use_cluster_motif_db = TRUE,
   mcd_alpha = 0.75,
   maha_barplot = TRUE,
-  maha_top_n = 20,
-  maha_mode = "both") {
+  maha_top_n = 20) {
 
   # Prepare data
   x = dat$lrtotal
@@ -690,10 +685,7 @@ gen_bagplot_bagfoot2 <- function(
   ###    - hollow "ME" label for HOMER-enriched motifs                   ###
   ###    - combined PDF + TIFF via patchwork                             ###
   ###                                                                    ###
-  ###  Two layouts (maha_mode):                                          ###
-  ###    "padj" : bar length = -log10(FDR), fill = D2                    ###
-  ###    "D2"   : bar length = D2,          fill = FDR                   ###
-  ###    "both" : both figures                                           ###
+  ###  Layout: bar length = D2, fill = FDR                             ###
   ###                                                                    ###
   ###  Reuses only columns already present in bagplottable:              ###
   ###    name_IG, name, D2, qvalue, direction, significant_homer         ###
@@ -729,18 +721,6 @@ gen_bagplot_bagfoot2 <- function(
 
     maha_up <- maha_sig[maha_sig$direction == "increase", , drop = FALSE]
     maha_dn <- maha_sig[maha_sig$direction == "decrease", , drop = FALSE]
-
-    # ---- -log10(FDR); replace Inf (qvalue == 0) by the largest finite value
-    add_logp <- function(df) {
-      if (nrow(df) == 0) return(df)
-      df$logp <- -log10(df$qvalue)
-      finite_max <- suppressWarnings(max(df$logp[is.finite(df$logp)], na.rm = TRUE))
-      if (!is.finite(finite_max)) finite_max <- 1
-      df$logp[!is.finite(df$logp)] <- finite_max
-      df
-    }
-    maha_up <- add_logp(maha_up)
-    maha_dn <- add_logp(maha_dn)
 
     # ---- Select top_n by the bar metric, then order for display
     #      (coord_flip puts the LAST factor level on TOP -> sort ascending)
@@ -809,7 +789,7 @@ gen_bagplot_bagfoot2 <- function(
         )
     }
 
-    # ---- One combined figure (up | dn) per requested mode
+    # ---- One combined figure (up | dn)
     save_maha_figure <- function(metric, fill_var, pal, fill_lab, y_lab, suffix) {
 
       d_up <- pick_top(maha_up, metric)
@@ -844,31 +824,17 @@ gen_bagplot_bagfoot2 <- function(
       invisible(list(plot_up = p_up, plot_dn = p_dn))
     }
 
-    # bar = -log10(FDR), colour = D2  (palette reversed: high D2 = dark red)
-    if (maha_mode %in% c("padj", "both")) {
-      save_maha_figure(
-        metric   = "logp",
-        fill_var = "D2",
-        pal      = rev(maha_fill_col),
-        fill_lab = expression(D^2),
-        y_lab    = expression(-log[10] * "(FDR)"),
-        suffix   = "padj"
-      )
-    }
-
     # bar = D2, colour = FDR  (palette as-is: low FDR = dark red)
-    if (maha_mode %in% c("D2", "both")) {
-      save_maha_figure(
-        metric   = "D2",
-        fill_var = "qvalue",
-        pal      = maha_fill_col,
-        fill_lab = "FDR",
-        y_lab    = expression(D^2),
-        suffix   = "D2"
-      )
-    }
+    save_maha_figure(
+      metric   = "D2",
+      fill_var = "qvalue",
+      pal      = maha_fill_col,
+      fill_lab = "FDR",
+      y_lab    = expression(D^2),
+      suffix   = "D2"
+    )
 
-    message("Mahalanobis barplots saved with prefix: ", outputfilename)
+    message("Mahalanobis barplot saved with prefix: ", outputfilename)
   }
 
 

@@ -46,11 +46,9 @@ option_list <- list(
 
   # --- MAHALANOBIS BARPLOTS ---
   make_option(c("--maha_barplot"), type = "character", default = "TRUE",
-              help = "Generate the Mahalanobis (D2 / FDR) barplots (TRUE/FALSE) [default: %default]"),
+              help = "Generate the Mahalanobis (D2) barplot (TRUE/FALSE) [default: %default]"),
   make_option(c("--maha_top_n"), type = "integer", default = 20,
               help = "Max bars per panel in the barplots [default: %default]"),
-  make_option(c("--maha_mode"), type = "character", default = "both",
-              help = "'padj' (bar = -log10(FDR), fill = D2), 'D2' (bar = D2, fill = FDR) or 'both' [default: %default]"),
   make_option(c("--maha_qvalue"), type = "double", default = 0.05,
               help = "FDR threshold [default: %default]"),
 
@@ -106,8 +104,6 @@ for (arg in c("bam_dir", "peak_dir", "output_dir", "control", "treatment")) {
   if (is.null(opt[[arg]])) fail(paste0("--", arg, " is required. Run 'bagfoot2 --help'."))
 }
 if (opt$control == opt$treatment) fail("--control and --treatment must be different.")
-if (!opt$maha_mode %in% c("padj", "D2", "both"))
-  fail(paste0("--maha_mode must be one of 'padj', 'D2', 'both' (got: '", opt$maha_mode, "')."))
 if (is.na(opt$cores) || opt$cores < 1) fail("--cores must be a positive integer.")
 
 run_homer_flag <- to_logical(opt$homer)
@@ -518,7 +514,7 @@ cat("   Motifs in the merged table:", nrow(dat), "\n")
 
 use_homer_plot <- run_homer_flag && !is.null(homer_results_file) && file.exists(homer_results_file)
 
-# Bagplot + D2 / FDR barplots + CSV table.
+# Bagplot + D2 barplot + CSV table.
 # lrtotal = log2(treatment / control): a positive delta FA means higher in the
 # treatment. The "increase" panel is titled with dataname1, so dataname1 must be
 # the treatment (set2) and dataname2 the control (set1).
@@ -534,8 +530,7 @@ tryCatch({
       homer_results_file      = homer_results_file,
       pval_threshold_homer    = 0.05,
       maha_barplot            = run_maha_flag,
-      maha_top_n              = opt$maha_top_n,
-      maha_mode               = opt$maha_mode
+      maha_top_n              = opt$maha_top_n
     )
   )
   cat(paste0("\n>>> Success! Results in: ", bg_dir, "\n"))

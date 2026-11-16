@@ -25,8 +25,7 @@ gen_bagplot_bagfoot2(
   use_cluster_motif_db = TRUE,
   mcd_alpha = 0.75,
   maha_barplot = TRUE,
-  maha_top_n = 20,
-  maha_mode = "both"
+  maha_top_n = 20
 )
 }
 \arguments{
@@ -58,11 +57,6 @@ true positives. See robust_mahalanobis_test() in method.R.}
 \item{maha_barplot}{Whether to generate the Mahalanobis barplot figures (default: TRUE).}
 
 \item{maha_top_n}{Max bars per panel in the Mahalanobis barplots (default: 20).}
-
-\item{maha_mode}{Which barplot layout(s) to produce:
-\code{"padj"} = bar length is -log10(FDR), fill is D2;
-\code{"D2"}   = bar length is D2, fill is FDR;
-\code{"both"} = both figures (default).}
 }
 \value{
 A ggplot object with the bagplot.
@@ -78,9 +72,9 @@ distance. Output columns (D2, pvalue, qvalue) keep the same names, so
 downstream scripts are unaffected.
 }
 \details{
-In addition to the bagplot, two barplot figures ranking motifs by the
-Mahalanobis statistic are produced (see \code{maha_mode}), following the same
-visual grammar as \code{gen_evt_barplot_bagfoot2()}: two panels (increase /
+In addition to the bagplot, a barplot figure ranking the significant motifs
+by the robust Mahalanobis distance (bar length = D2, fill = FDR) is produced,
+following the same visual grammar as \code{gen_evt_barplot_bagfoot2()}: two panels (increase /
 decrease), bars pointing right, red-to-grey gradient fill, and hollow "ME"
 labels for HOMER-enriched motifs.
 }
